@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'ruby2d'
+require 'config'
+require 'pry'
+
+application_root_path = File.expand_path('..', __dir__)
+
+# Load config
+Config.load_and_set_settings(File.join(application_root_path, 'config.yml'))
+
+# Require lib
+require_relative '../lib/coordinates_mapper'
+
+# Resources
+require_relative '../lib/resources/concerns/updatable'
+require_relative '../lib/resources/apple'
+require_relative '../lib/resources/wall'
+require_relative '../lib/resources/snake'
+
+# Graphics
+require_relative '../lib/graphics/apple'
+require_relative '../lib/graphics/snake'
+require_relative '../lib/graphics/wall'
+
+# Require main.rb
+require_relative '../main'
