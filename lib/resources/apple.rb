@@ -7,15 +7,19 @@ module PerceptronSnakes
 
       attr_reader :x, :y
 
-      def initialize
-        new_coordinates
+      def initialize(snake)
+        new_coordinates(snake)
       end
 
-      def new_coordinates
+      def new_coordinates(snake)
         vector_excluding_wall = Settings.sizes.vector - 1
 
-        @x = rand(-vector_excluding_wall..vector_excluding_wall)
-        @y = rand(-vector_excluding_wall..vector_excluding_wall)
+        loop do
+          @x = rand(-vector_excluding_wall..vector_excluding_wall)
+          @y = rand(-vector_excluding_wall..vector_excluding_wall)
+
+          break if !snake.coordinates.include?([@x, @y])
+        end
 
         need_update!
       end

@@ -24,5 +24,8 @@ require_relative '../lib/graphics/apple'
 require_relative '../lib/graphics/snake'
 require_relative '../lib/graphics/wall'
 
+# NN
+require_relative '../lib/neural_network/input'
+
 # Require main.rb
 require_relative '../main'

@@ -9,13 +9,14 @@ module PerceptronSnakes
 
       DIRECTIONS = %i[up right down left].freeze
 
-      attr_reader :body, :alive, :direction
+      attr_reader :body, :alive, :direction, :apples
 
       def initialize
-        @body = Array[BodyCell.new(0, 0)]
+        @body = Array[BodyCell.new(0, 0), BodyCell.new(-1, 0)]
         @direction = DIRECTIONS.sample
         @alive = true
         @steps = 0
+        @apples = 0
       end
 
       def turn_right
@@ -36,7 +37,9 @@ module PerceptronSnakes
           @alive = false
         else
           if apple.x == new_head.x && apple.y == new_head.y
-            apple.new_coordinates
+            @apples += 1
+
+            apple.new_coordinates(self)
           else
             body.pop
           end
@@ -49,10 +52,18 @@ module PerceptronSnakes
         need_update!
       end
 
+      def head
+        body.first
+      end
+
+      def coordinates
+        body.map { |cell| [cell.x, cell.y] }
+      end
+
       private
 
       def build_new_head
-        new_head = body.first.dup
+        new_head = head.dup
 
         case direction
         when :up then new_head.y += 1
