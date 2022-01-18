@@ -12,7 +12,7 @@ module PerceptronSnakes
         @head_y = snake.head.y
       end
 
-      def input
+      def call
         vision + direction + tail_direction
       end
 

@@ -22,6 +22,10 @@ module PerceptronSnakes
         snake.updated!
       end
 
+      def remove
+        @graphic_cells.map(&:remove)
+      end
+
       private
 
       attr_reader :graphic_cells

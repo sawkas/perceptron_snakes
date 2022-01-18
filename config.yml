@@ -1,11 +1,14 @@
 sizes:
-  cell: 10 # snake cell = 10x10 pixels
-  vector: 25 # x = -25..25 && y = -25..25
+  cell: 50 # snake cell = 10x10 pixels
+  vector: 5 # x = -25..25 && y = -25..25
+
+  cell: 10
+  vector: 25
 
 colors:
-  snake: 'white'
-  apple: 'red'
-  background: 'black'
+  snake: 'red'
+  apple: 'green'
+  background: 'white'
   wall: 'gray'
 
 game:

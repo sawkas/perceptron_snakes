@@ -9,7 +9,8 @@ module PerceptronSnakes
 
       DIRECTIONS = %i[up right down left].freeze
 
-      attr_reader :body, :alive, :direction, :apples
+      attr_accessor :direction
+      attr_reader :body, :alive, :apples, :steps
 
       def initialize
         @body = Array[BodyCell.new(0, 0), BodyCell.new(-1, 0)]
@@ -17,16 +18,6 @@ module PerceptronSnakes
         @alive = true
         @steps = 0
         @apples = 0
-      end
-
-      def turn_right
-        index = DIRECTIONS.index(direction)
-        @direction = DIRECTIONS[(index + 1) % 4]
-      end
-
-      def turn_left
-        index = DIRECTIONS.index(direction)
-        @direction = DIRECTIONS[(index - 1)]
       end
 
       #  Main method
@@ -58,6 +49,10 @@ module PerceptronSnakes
 
       def coordinates
         body.map { |cell| [cell.x, cell.y] }
+      end
+
+      def calculate_fitness
+        steps + (2**apples + (apples**2.1) * 500) - ((apples**1.2) * (steps * 0.25)**1.3)
       end
 
       private

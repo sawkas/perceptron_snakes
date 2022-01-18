@@ -1,18 +1,5 @@
 # frozen_string_literal: true
 
-# p = PerceptronSnakes::NeuralNetwork::Perceptron.new(
-#   number_of_inputs: 32,
-#   number_of_outputs: 4,
-#   number_of_nodes_on_hidden: [20, 12],
-#   activation_function: :sigmoid,
-#   bias: true
-# )
-# p.set_random_weights
-# p.feedforward(Array.new(32, 0))
-
-require 'matrix'
-require 'pry'
-
 module PerceptronSnakes
   module NeuralNetwork
     class Perceptron
@@ -60,12 +47,10 @@ module PerceptronSnakes
           @weights[layer] = Array.new(prev_nodes, [])
 
           prev_nodes.times do |node|
-            @weights[layer][node] = next_nodes.times.map { rand(0.to_f..1.to_f) }
+            @weights[layer][node] = next_nodes.times.map { rand(-1.to_f..1.to_f) }
           end
         end
       end
     end
   end
 end
-
-

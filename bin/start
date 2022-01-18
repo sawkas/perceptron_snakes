@@ -4,11 +4,16 @@
 require 'ruby2d'
 require 'config'
 require 'pry'
+require 'matrix'
+require 'json'
 
 application_root_path = File.expand_path('..', __dir__)
 
 # Load config
 Config.load_and_set_settings(File.join(application_root_path, 'config.yml'))
+
+# set rootdir
+ROOT_DIR = File.join(File.dirname(__FILE__), '..')
 
 # Require lib
 require_relative '../lib/coordinates_mapper'
@@ -26,6 +31,15 @@ require_relative '../lib/graphics/wall'
 
 # NN
 require_relative '../lib/neural_network/input'
+require_relative '../lib/neural_network/perceptron'
+require_relative '../lib/neural_network/functions/nothing'
+require_relative '../lib/neural_network/functions/sigmoid'
+require_relative '../lib/neural_network/result_mapper'
+require_relative '../lib/neural_network/weights_crosser'
+
+# Require data export/import
+require_relative '../lib/data/export_weights'
+require_relative '../lib/data/import_weights'
 
 # Require main.rb
 require_relative '../main'

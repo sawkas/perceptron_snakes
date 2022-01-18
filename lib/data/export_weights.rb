@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PerceptronSnakes
   module Data
     class ExportWeights
@@ -9,7 +11,7 @@ module PerceptronSnakes
       def export
         path = File.join(ROOT_DIR, 'data', filename)
 
-        File.open(path, "wb") { |file| file.puts JSON.pretty_generate(weights) }
+        File.open(path, 'wb') { |file| file.puts JSON.pretty_generate(weights) }
       end
 
       private
@@ -22,4 +24,3 @@ module PerceptronSnakes
     end
   end
 end
-
