@@ -28,7 +28,6 @@ module PerceptronSnakes
 
       attr_reader :weights, :next_generation_weights
 
-
       # Simulated Binary Crossover
       # def crossover(weights1, weights2, mutation_rate = MUTATION_RATE)
       #   weights1.map.with_index do |w1, index|
@@ -52,7 +51,7 @@ module PerceptronSnakes
 
       # Single Point Binary Crossover
       def crossover(weights1, weights2, mutation_rate = MUTATION_RATE)
-        point = rand(0..(weights1.size-1))
+        point = rand(0..(weights1.size - 1))
 
         if [true, false].sample
           buff = weights1
@@ -63,7 +62,7 @@ module PerceptronSnakes
         res = weights1.each_with_index.map do |sub_weights1, index|
           sub_weights2 = weights2[index]
 
-          sub_weights1[0..point] + sub_weights2[(point+1)..-1]
+          sub_weights1[0..point] + sub_weights2[(point + 1)..]
         end
 
         random_gaussian = GaussianRandomNumberGenerator.new(0.5)
@@ -73,8 +72,8 @@ module PerceptronSnakes
             column.map do |value|
               dice = rand(1..100)
 
-              if (dice <= mutation_rate)
-                value += random_gaussian.rand * 0.2
+              if dice <= mutation_rate
+                value + random_gaussian.rand * 0.2
               else
                 value
               end

@@ -2,6 +2,7 @@
 
 require_relative '../spec_helper'
 
+require_relative '../../lib/gaussian_random_number_generator'
 require_relative '../../lib/neural_network/weights_store'
 
 describe PerceptronSnakes::NeuralNetwork::WeightsStore do
@@ -58,8 +59,8 @@ describe PerceptronSnakes::NeuralNetwork::WeightsStore do
   describe '#crossover' do
     subject { weights_store.send(:crossover, weights1, weights2, mutation_rate) }
 
-    let(:weights1) { [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]] }
-    let(:weights2) { [[11, 12], [13, 14], [15, 16], [17, 18], [19, 20]] }
+    let(:weights1) { [[[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]] }
+    let(:weights2) { [[[11, 12], [13, 14], [15, 16], [17, 18], [19, 20]]] }
 
     context 'when mutation_rate is 0' do
       let(:mutation_rate) { 0 }

@@ -22,7 +22,7 @@ module PerceptronSnakes
 
       def feedforward(inputs)
         weights.inject(inputs) do |memo, layer_weights|
-          memo = calculate_layer(memo, layer_weights)
+          calculate_layer(memo, layer_weights)
         end
       end
 
@@ -49,7 +49,7 @@ module PerceptronSnakes
       def calculate_layer(inputs, layer_weights)
         inputs.unshift(1) if bias
 
-        (multiply_matrices([inputs], layer_weights)).to_a.flatten.map { |o| activation_function.call(o) }
+        multiply_matrices([inputs], layer_weights).to_a.flatten.map { |o| activation_function.call(o) }
       end
 
       def multiply_matrices(a, b)

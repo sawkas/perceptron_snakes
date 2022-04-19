@@ -59,7 +59,7 @@ NUMBER_OF_GENERATIONS = 100
 
 new_snake
 
-Game loop
+# Game loop
 # loop do
 update do
   sleep(Settings.game.base_delay)
@@ -83,15 +83,15 @@ update do
 
     @weight_store.add(@perceptron.weights, fitness)
 
-    if @generation == 0
-      # PerceptronSnakes::Data::ImportWeights.new(@perceptron, '1650344678_5051.txt').import
-      @perceptron.set_random_weights
+    if @generation.zero?
+      PerceptronSnakes::Data::ImportWeights.new(@perceptron, '1650289934_21637.txt').import
+      # @perceptron.set_random_weights
     else
       @perceptron.weights = @weight_store.new_weights
     end
 
     if @snake_number == SNAKES_IN_GENERATION
-      puts "-----------------------"
+      puts '-----------------------'
       puts "generation: #{@generation}"
       puts "avg fitness: #{@fitneses.sum / @fitneses.size.to_f}"
       puts "best_score: #{@best_score}"
@@ -118,4 +118,3 @@ update do
 end
 
 show
-#

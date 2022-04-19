@@ -41,7 +41,6 @@ describe PerceptronSnakes::NeuralNetwork::Input do
       # w . . . . + . . . . w
       # w w w w w + w w w w w
 
-
       let(:distance_to_wall) do
         [
           0.14285714285714285,
@@ -64,7 +63,7 @@ describe PerceptronSnakes::NeuralNetwork::Input do
           0.0,
           0.0,
           0.0,
-          0.0,
+          0.0
         ]
       end
 
@@ -82,7 +81,7 @@ describe PerceptronSnakes::NeuralNetwork::Input do
       end
 
       let(:vision) do
-        (0..7).map { |i| [distance_to_wall[i], distance_to_apple[i], distance_to_snake[i]]}.flatten
+        (0..7).map { |i| [distance_to_wall[i], distance_to_apple[i], distance_to_snake[i]] }.flatten
       end
 
       it { is_expected.to eq(vision) }

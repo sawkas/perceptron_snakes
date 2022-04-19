@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 class GaussianRandomNumberGenerator
-  def initialize(mean = 0.0, sd = 1.0, rng = lambda { Kernel.rand })
-    @mean, @sd, @rng = mean, sd, rng
+  def initialize(mean = 0.0, sd = 1.0, rng = -> { Kernel.rand })
+    @mean = mean
+    @sd = sd
+    @rng = rng
     @compute_next_pair = false
   end
 

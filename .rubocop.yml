@@ -1,0 +1,32 @@
+Style/Documentation:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Style/HashLikeCase:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Style/MixinUsage:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 50
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 50
+

@@ -6,7 +6,7 @@ module PerceptronSnakes
       class Relu
         class << self
           def call(x)
-            x > 0 ? x : x * 0.01
+            x.positive? ? x : x * 0.01
           end
         end
       end

@@ -8,7 +8,7 @@ module PerceptronSnakes
       BodyCell = Struct.new(:x, :y)
 
       DIRECTIONS = %i[up right down left].freeze
-      POSSIBLE_STEPS_WITHOUT_APPLE = 100
+      AVAILABLE_STEPS_WITHOUT_APPLE = 100
 
       attr_accessor :direction
       attr_reader :body, :alive, :apples, :steps, :steps_without_apple
@@ -26,7 +26,10 @@ module PerceptronSnakes
       def step(wall, apple)
         new_head = build_new_head
 
-        if wall.contains?(new_head.x, new_head.y) || body.include?(new_head) || POSSIBLE_STEPS_WITHOUT_APPLE == steps_without_apple
+        if wall.contains?(new_head.x, new_head.y) ||
+           body.include?(new_head) ||
+           AVAILABLE_STEPS_WITHOUT_APPLE == steps_without_apple
+
           @alive = false
         else
           if apple.x == new_head.x && apple.y == new_head.y
@@ -56,34 +59,35 @@ module PerceptronSnakes
       end
 
       def calculate_fitness
-        steps + ((2**apples) + (apples**2.1) * 500) - (((0.25 ** steps)**1.3) * (apples**1.2))
+        steps + ((2**apples) + (apples**2.1) * 500) - (((0.25**steps)**1.3) * (apples**1.2))
       end
 
       private
 
       def build_body
-        coordinates = case direction
-        when :up
-          head_x = rand((-Settings.sizes.vector+1)..(Settings.sizes.vector-1))
-          head_y = rand((-Settings.sizes.vector+4)..Settings.sizes.vector-1)
+        coordinates =
+          case direction
+          when :up
+            head_x = rand((-Settings.sizes.vector + 1)..(Settings.sizes.vector - 1))
+            head_y = rand((-Settings.sizes.vector + 4)..Settings.sizes.vector - 1)
 
-          [[head_x, head_y], [head_x, head_y-1], [head_x, head_y-2]]
-        when :down
-          head_x = rand((-Settings.sizes.vector+1)..(Settings.sizes.vector-1))
-          head_y = rand((-Settings.sizes.vector+1)..(Settings.sizes.vector-4))
+            [[head_x, head_y], [head_x, head_y - 1], [head_x, head_y - 2]]
+          when :down
+            head_x = rand((-Settings.sizes.vector + 1)..(Settings.sizes.vector - 1))
+            head_y = rand((-Settings.sizes.vector + 1)..(Settings.sizes.vector - 4))
 
-          [[head_x, head_y], [head_x, head_y+1], [head_x, head_y+2]]
-        when :right
-          head_x = rand((-Settings.sizes.vector+4)..(Settings.sizes.vector-1))
-          head_y = rand((-Settings.sizes.vector+1)..(Settings.sizes.vector-1))
+            [[head_x, head_y], [head_x, head_y + 1], [head_x, head_y + 2]]
+          when :right
+            head_x = rand((-Settings.sizes.vector + 4)..(Settings.sizes.vector - 1))
+            head_y = rand((-Settings.sizes.vector + 1)..(Settings.sizes.vector - 1))
 
-          [[head_x, head_y], [head_x-1, head_y], [head_x-2, head_y]]
-        when :left
-          head_x = rand((-Settings.sizes.vector+1)..(Settings.sizes.vector-4))
-          head_y = rand((-Settings.sizes.vector+1)..(Settings.sizes.vector-1))
+            [[head_x, head_y], [head_x - 1, head_y], [head_x - 2, head_y]]
+          when :left
+            head_x = rand((-Settings.sizes.vector + 1)..(Settings.sizes.vector - 4))
+            head_y = rand((-Settings.sizes.vector + 1)..(Settings.sizes.vector - 1))
 
-          [[head_x, head_y], [head_x+1, head_y], [head_x+2, head_y]]
-        end
+            [[head_x, head_y], [head_x + 1, head_y], [head_x + 2, head_y]]
+          end
 
         coordinates.map { |x, y| BodyCell.new(x, y) }
       end
