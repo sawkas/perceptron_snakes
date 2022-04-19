@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'rspec'
+require_relative '../spec_helper'
+
 require_relative '../../lib/neural_network/perceptron'
 require_relative '../../lib/neural_network/functions/sigmoid'
 require_relative '../../lib/neural_network/functions/nothing'

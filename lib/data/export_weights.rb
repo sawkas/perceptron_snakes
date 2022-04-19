@@ -3,8 +3,8 @@
 module PerceptronSnakes
   module Data
     class ExportWeights
-      def initialize(perceptron, fitness)
-        @weights = perceptron.weights
+      def initialize(weights, fitness)
+        @weights = weights
         @fitness = fitness
       end
 

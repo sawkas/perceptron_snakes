@@ -26,19 +26,6 @@ module PerceptronSnakes
         end
       end
 
-      # private
-
-      attr_reader :number_of_inputs, :number_of_outputs, :nodes_on_each_layer, :weights, :activation_function, :bias
-
-      # inputs: [1, 2, 3]
-      # weights: [[1, 2], [3, 4], [5, 6]]
-      # returns: [22, 28]
-      def calculate_layer(inputs, layer_weights)
-        inputs.unshift(1) if bias
-
-        (Matrix[inputs] * Matrix[*layer_weights]).to_a.flatten.map { |o| activation_function.call(o) }
-      end
-
       def set_random_weights
         @weights = []
 
@@ -50,6 +37,23 @@ module PerceptronSnakes
             @weights[layer][node] = next_nodes.times.map { rand(-1.to_f..1.to_f) }
           end
         end
+      end
+
+      private
+
+      attr_reader :number_of_inputs, :number_of_outputs, :nodes_on_each_layer, :activation_function, :bias
+
+      # inputs: [1, 2, 3]
+      # weights: [[1, 2], [3, 4], [5, 6]]
+      # returns: [22, 28]
+      def calculate_layer(inputs, layer_weights)
+        inputs.unshift(1) if bias
+
+        (multiply_matrices([inputs], layer_weights)).to_a.flatten.map { |o| activation_function.call(o) }
+      end
+
+      def multiply_matrices(a, b)
+        Matrix[*a] * Matrix[*b]
       end
     end
   end

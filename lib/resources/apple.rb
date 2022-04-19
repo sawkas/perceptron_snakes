@@ -18,7 +18,7 @@ module PerceptronSnakes
           @x = rand(-vector_excluding_wall..vector_excluding_wall)
           @y = rand(-vector_excluding_wall..vector_excluding_wall)
 
-          break if !snake.coordinates.include?([@x, @y])
+          break unless snake.coordinates.include?([@x, @y])
         end
 
         need_update!
