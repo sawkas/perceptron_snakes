@@ -7,16 +7,15 @@ require 'pry'
 require 'matrix'
 require 'json'
 
-application_root_path = File.expand_path('..', __dir__)
-
-# Load config
-Config.load_and_set_settings(File.join(application_root_path, 'config.yml'))
-
 # set rootdir
 ROOT_DIR = File.join(File.dirname(__FILE__), '..')
 
+# Load config
+Config.load_and_set_settings(File.expand_path('config.yml'))
+
 # Require lib
 require_relative '../lib/coordinates_mapper'
+require_relative '../lib/gaussian_random_number_generator'
 
 # Resources
 require_relative '../lib/resources/concerns/updatable'
@@ -34,8 +33,9 @@ require_relative '../lib/neural_network/input'
 require_relative '../lib/neural_network/perceptron'
 require_relative '../lib/neural_network/functions/nothing'
 require_relative '../lib/neural_network/functions/sigmoid'
+require_relative '../lib/neural_network/functions/relu'
 require_relative '../lib/neural_network/result_mapper'
-require_relative '../lib/neural_network/weights_crosser'
+require_relative '../lib/neural_network/weights_store'
 
 # Require data export/import
 require_relative '../lib/data/export_weights'
