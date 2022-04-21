@@ -3,8 +3,6 @@
 module PerceptronSnakes
   module NeuralNetwork
     class WeightsStore
-      MUTATION_RATE = 5
-
       def initialize
         @weights = {}
         @next_generation_weights = {}
@@ -29,7 +27,7 @@ module PerceptronSnakes
       attr_reader :weights, :next_generation_weights
 
       # Simulated Binary Crossover
-      # def crossover(weights1, weights2, mutation_rate = MUTATION_RATE)
+      # def crossover(weights1, weights2, mutation_rate = Settings.learning.mutation_rate)
       #   weights1.map.with_index do |w1, index|
       #     w2 = weights2[index]
 
@@ -50,7 +48,7 @@ module PerceptronSnakes
       # end
 
       # Single Point Binary Crossover
-      def crossover(weights1, weights2, mutation_rate = MUTATION_RATE)
+      def crossover(weights1, weights2, mutation_rate = Settings.learning.mutation_rate)
         point = rand(0..(weights1.size - 1))
 
         if [true, false].sample
@@ -73,7 +71,7 @@ module PerceptronSnakes
               dice = rand(1..100)
 
               if dice <= mutation_rate
-                value + random_gaussian.rand * 0.2
+                value + random_gaussian.rand * Settings.learning.mutation_scale
               else
                 value
               end

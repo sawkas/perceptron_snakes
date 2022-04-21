@@ -46,75 +46,82 @@ def snake_step
   @snake_graphic.snake.step(@wall_graphic.wall, @apple_graphic.apple)
 end
 
-@best_score = 0
-@snake_number = 0
+def log_variables
+  str = ""
+  str +=  "-----------------------\n"
+  str += "generation: #{@generation}: "
+  str += "best_score: #{@scores.max}; "
+  str += "avg fitness: #{(@fitneses.sum / @fitneses.size)}; "
+  str += "avg score: #{(@scores.sum.to_f / @scores.size).round(2)}"
+  puts str
+end
+
 @generation = 0
+@snake_number = 0
+@scores = []
 @fitneses = []
-
-SNAKES_IN_GENERATION = 1000
-NUMBER_OF_GENERATIONS = 100
-
-@weight_store = PerceptronSnakes::NeuralNetwork::WeightsStore.new
 @best_snake = { weights: nil, fitness: 0 }
 
+@weight_store = PerceptronSnakes::NeuralNetwork::WeightsStore.new
 new_snake
 
-# Game loop
-# loop do
-update do
-  sleep(Settings.game.base_delay)
-  snake_step
+main_iteration =
+  Proc.new do
+    snake_step
 
-  unless @snake_graphic.snake.alive
-    fitness = @snake_graphic.snake.calculate_fitness
-    @fitneses << fitness
-    @best_score = @snake_graphic.snake.apples if @snake_graphic.snake.apples > @best_score
+    unless @snake_graphic.snake.alive
+      fitness = @snake_graphic.snake.calculate_fitness
 
-    # puts "-----------------------"
-    # puts "snake: #{@snake_number}"
-    # puts "generation: #{@generation}"
-    # puts "fitness: #{fitness}"
-    # puts "best_score: #{@best_score}"
-
-    if @best_snake[:fitness] < fitness
-      @best_snake[:fitness] = fitness
-      @best_snake[:weights] = @perceptron.weights
-    end
-
-    @weight_store.add(@perceptron.weights, fitness)
-
-    if @generation.zero?
-      PerceptronSnakes::Data::ImportWeights.new(@perceptron, '1650289934_21637.txt').import
-      # @perceptron.set_random_weights
-    else
-      @perceptron.weights = @weight_store.new_weights
-    end
-
-    if @snake_number == SNAKES_IN_GENERATION
-      puts '-----------------------'
-      puts "generation: #{@generation}"
-      puts "avg fitness: #{@fitneses.sum / @fitneses.size.to_f}"
-      puts "best_score: #{@best_score}"
-      @weight_store.next_generation
-      @snake_number = 0
-      @generation += 1
-      @fitneses = []
-      @best_score = 0
-
-      if @generation == NUMBER_OF_GENERATIONS
-        PerceptronSnakes::Data::ExportWeights.new(@best_snake[:weights], @best_snake[:fitness]).export
-
-        exit
+      @fitneses << fitness
+      @scores << @snake_graphic.snake.apples
+      if @best_snake[:fitness] < fitness
+        @best_snake[:fitness] = fitness
+        @best_snake[:weights] = @perceptron.weights
       end
-    else
-      @snake_number += 1
+
+      @weight_store.add(@perceptron.weights, fitness)
+
+      if @generation.zero?
+        if Settings.learning.weights
+          PerceptronSnakes::Data::ImportWeights.new(@perceptron, Settings.learning.weights).import
+        else
+          @perceptron.set_random_weights
+        end
+      else
+        @perceptron.weights = @weight_store.new_weights
+      end
+
+
+      if @snake_number == Settings.learning.number_of_snakes_in_generation
+        log_variables
+
+        @weight_store.next_generation
+        @snake_number = 0
+        @generation += 1
+        @fitneses = []
+        @scores = []
+
+        if @generation == Settings.learning.number_of_generations
+          PerceptronSnakes::Data::ExportWeights.new(@best_snake[:weights], @best_snake[:fitness]).export
+
+          exit
+        end
+      else
+        @snake_number += 1
+      end
+
+      new_snake
     end
 
-    new_snake
+    @apple_graphic.update!
+    @snake_graphic.update!
   end
 
-  @apple_graphic.update!
-  @snake_graphic.update!
+
+if Settings.game.only_command_line_output
+  loop { main_iteration.call }
+else
+  update { sleep(Settings.game.step_delay); main_iteration.call }
 end
 
 show
