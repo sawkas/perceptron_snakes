@@ -31,11 +31,16 @@ require_relative '../lib/graphics/wall'
 # NN
 require_relative '../lib/neural_network/input'
 require_relative '../lib/neural_network/perceptron'
+require_relative '../lib/neural_network/result_mapper'
+require_relative '../lib/neural_network/roulette_wheel'
+require_relative '../lib/neural_network/crossover'
+require_relative '../lib/neural_network/mutation'
+require_relative '../lib/neural_network/weights_store'
+
+# functions
 require_relative '../lib/neural_network/functions/nothing'
 require_relative '../lib/neural_network/functions/sigmoid'
 require_relative '../lib/neural_network/functions/relu'
-require_relative '../lib/neural_network/result_mapper'
-require_relative '../lib/neural_network/weights_store'
 
 # Require data export/import
 require_relative '../lib/data/export_weights'

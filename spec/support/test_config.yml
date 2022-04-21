@@ -1,6 +1,6 @@
 sizes:
-  cell: 50 # snake cell = 10x10 pixels
-  vector: 5 # x = -25..25 && y = -25..25
+  cell: 25 # snake cell = 25x25 pixels
+  vector: 5 # x = -5..5 && y = -5..5
 
 colors:
   snake: 'red'
@@ -9,4 +9,14 @@ colors:
   wall: 'gray'
 
 game:
-  base_delay: 0.5
+  only_command_line_output: true
+  step_delay: 0.1
+
+learning:
+  weights: null
+  available_steps_without_apple: 150
+  number_of_snakes_in_generation: 2
+  number_of_parents_in_generation: 2
+  number_of_generations: 100
+  mutation_rate: 2
+  mutation_scale: 0.2

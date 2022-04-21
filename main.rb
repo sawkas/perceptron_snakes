@@ -47,11 +47,11 @@ def snake_step
 end
 
 def log_variables
-  str = ""
-  str +=  "-----------------------\n"
+  str = ''
+  str += "-----------------------\n"
   str += "generation: #{@generation}: "
   str += "best_score: #{@scores.max}; "
-  str += "avg fitness: #{(@fitneses.sum / @fitneses.size)}; "
+  str += "avg fitness: #{@fitneses.sum / @fitneses.size}; "
   str += "avg score: #{(@scores.sum.to_f / @scores.size).round(2)}"
   puts str
 end
@@ -66,7 +66,7 @@ end
 new_snake
 
 main_iteration =
-  Proc.new do
+  proc do
     snake_step
 
     unless @snake_graphic.snake.alive
@@ -79,7 +79,7 @@ main_iteration =
         @best_snake[:weights] = @perceptron.weights
       end
 
-      @weight_store.add(@perceptron.weights, fitness)
+      @weight_store.add(fitness, @perceptron.weights)
 
       if @generation.zero?
         if Settings.learning.weights
@@ -88,14 +88,13 @@ main_iteration =
           @perceptron.set_random_weights
         end
       else
-        @perceptron.weights = @weight_store.new_weights
+        @perceptron.weights = @weight_store.get_offspring_weights
       end
-
 
       if @snake_number == Settings.learning.number_of_snakes_in_generation
         log_variables
 
-        @weight_store.next_generation
+        @weight_store.build_offspring
         @snake_number = 0
         @generation += 1
         @fitneses = []
@@ -117,11 +116,14 @@ main_iteration =
     @snake_graphic.update!
   end
 
-
 if Settings.game.only_command_line_output
   loop { main_iteration.call }
 else
-  update { sleep(Settings.game.step_delay); main_iteration.call }
+  update do
+    sleep(Settings.game.step_delay)
+
+    main_iteration.call
+  end
 end
 
 show

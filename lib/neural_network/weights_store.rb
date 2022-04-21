@@ -4,95 +4,43 @@ module PerceptronSnakes
   module NeuralNetwork
     class WeightsStore
       def initialize
-        @weights = {}
-        @next_generation_weights = {}
+        @parents = []
+        @offspring = []
       end
 
-      def add(weights, fitness)
-        @next_generation_weights[fitness] ||= []
-        @next_generation_weights[fitness] << weights
+      def add(fitness, weights)
+        @parents << { fitness: fitness, weights: weights }
       end
 
-      def new_weights
-        crossover(get_random_weights, get_random_weights)
+      def get_offspring_weights
+        @offspring.pop
       end
 
-      def next_generation
-        @weights = next_generation_weights
-        @next_generation_weights = {}
+      def build_offspring
+        rw = RouletteWheel.new(fitness_hash)
+
+        Settings.learning.number_of_snakes_in_generation.times do
+          child = Crossover.crossover(rw.get_random, rw.get_random)
+
+          @offspring << Mutation.mutate(child)
+        end
+
+        # add top N parents to the offspring
+        n = Settings.learning.number_of_parents_in_generation
+        @offspring += @parents.sort_by { |w| w[:fitness] }.last(n).map { |w| w[:weights] }
+
+        @parents = []
       end
 
       private
 
-      attr_reader :weights, :next_generation_weights
+      attr_reader :parents
 
-      # Simulated Binary Crossover
-      # def crossover(weights1, weights2, mutation_rate = Settings.learning.mutation_rate)
-      #   weights1.map.with_index do |w1, index|
-      #     w2 = weights2[index]
-
-      #     if w1.is_a?(Array)
-      #       crossover(w1, w2, mutation_rate)
-      #     else
-      #       dice = rand(1..100)
-
-      #       if dice <= mutation_rate
-      #         rand(-1.to_f..1.to_f)
-      #       elsif (dice - mutation_rate) < ((100 - mutation_rate) / 2)
-      #         w1
-      #       else
-      #         w2
-      #       end
-      #     end
-      #   end
-      # end
-
-      # Single Point Binary Crossover
-      def crossover(weights1, weights2, mutation_rate = Settings.learning.mutation_rate)
-        point = rand(0..(weights1.size - 1))
-
-        if [true, false].sample
-          buff = weights1
-          weights1 = weights2
-          weights2 = buff
+      def fitness_hash
+        parents.each_with_object({}) do |parent, memo|
+          memo[parent[:fitness]] ||= []
+          memo[parent[:fitness]] << parent[:weights]
         end
-
-        res = weights1.each_with_index.map do |sub_weights1, index|
-          sub_weights2 = weights2[index]
-
-          sub_weights1[0..point] + sub_weights2[(point + 1)..]
-        end
-
-        random_gaussian = GaussianRandomNumberGenerator.new(0.5)
-
-        res.map do |row|
-          row.map do |column|
-            column.map do |value|
-              dice = rand(1..100)
-
-              if dice <= mutation_rate
-                value + random_gaussian.rand * Settings.learning.mutation_scale
-              else
-                value
-              end
-            end
-          end
-        end
-      end
-
-      # Roulette wheel selection
-      def get_random_weights
-        total_rate = weights.keys.sum
-        rates = weights.keys.sort
-        random_seed = rand(total_rate)
-
-        winner = rates.each do |rate|
-          break rate if random_seed <= rate
-
-          random_seed -= rate
-        end
-
-        weights[winner].sample
       end
     end
   end

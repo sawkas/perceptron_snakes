@@ -9,13 +9,14 @@ colors:
   wall: 'gray'
 
 game:
-  only_command_line_output: false
+  only_command_line_output: true
   step_delay: 0.1
 
 learning:
-  weights: '1650378163_18014398511655888.txt' # weights to load in first generation
+  # weights: '1650378163_18014398511655888.txt' # weights to load in first generation
   available_steps_without_apple: 150
-  number_of_snakes_in_generation: 1500
+  number_of_snakes_in_generation: 1000
+  number_of_parents_in_generation: 500
   number_of_generations: 100
-  mutation_rate: 3
+  mutation_rate: 2
   mutation_scale: 0.2
