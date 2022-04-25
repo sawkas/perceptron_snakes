@@ -37,6 +37,7 @@ module PerceptronSnakes
       attr_reader :parents
 
       def fitness_hash
+        # TODO: use uniq key for each weight
         parents.each_with_object({}) do |parent, memo|
           memo[parent[:fitness]] ||= []
           memo[parent[:fitness]] << parent[:weights]

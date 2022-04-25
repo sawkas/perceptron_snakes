@@ -1,6 +1,6 @@
 sizes:
-  cell: 25 # snake cell = 25x25 pixels
-  vector: 5 # x = -5..5 && y = -5..5
+  cell: 35
+  vector: 5
 
 colors:
   snake: 'red'
@@ -9,14 +9,14 @@ colors:
   wall: 'gray'
 
 game:
-  only_command_line_output: true
-  step_delay: 0.1
+  only_command_line_output: false
+  step_delay: 0.03
 
 learning:
-  # weights: '1650378163_18014398511655888.txt' # weights to load in first generation
+  weights: '1650746992_37778931862957170098176.txt'
   available_steps_without_apple: 150
   number_of_snakes_in_generation: 1000
   number_of_parents_in_generation: 500
-  number_of_generations: 100
-  mutation_rate: 2
+  number_of_generations: 500
+  mutation_rate: 5
   mutation_scale: 0.2
