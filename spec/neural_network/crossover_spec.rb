@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-
-require_relative '../../lib/neural_network/crossover'
-
 describe PerceptronSnakes::NeuralNetwork::Crossover do
   describe '#crossover' do
     subject { described_class.crossover(weights1, weights2) }

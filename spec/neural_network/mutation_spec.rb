@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-
-require_relative '../../lib/gaussian_random_number_generator'
-require_relative '../../lib/neural_network/mutation'
-
 describe PerceptronSnakes::NeuralNetwork::Mutation do
-  before(:all) { load_config }
-
   describe '#mutate' do
     subject { described_class.mutate(weights, mutation_rate) }
 

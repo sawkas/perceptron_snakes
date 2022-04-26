@@ -33,7 +33,7 @@ module PerceptronSnakes
       def udpdate_or_build_body_cells
         snake.body.each_with_index do |body_cell, index|
           graphic_cell = graphic_cells[index]
-          mapped_cell = CoordinatesMapper.map_cell_to_square(body_cell.x, body_cell.y)
+          mapped_cell = Utils::CoordinatesMapper.map_cell_to_square(body_cell.x, body_cell.y)
 
           if graphic_cell
             graphic_cell.x = mapped_cell[:x]

@@ -1,21 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-
-require_relative '../../lib/neural_network/input'
-require_relative '../../lib/resources/concerns/updatable'
-require_relative '../../lib/resources/snake'
-require_relative '../../lib/resources/apple'
-require_relative '../../lib/resources/wall'
-
 describe PerceptronSnakes::NeuralNetwork::Input do
   let(:input) { described_class.new(snake, wall, apple) }
   let(:snake) { build_snake(snake_coordinates) }
   let(:wall) { PerceptronSnakes::Resources::Wall.new }
   let(:apple) { PerceptronSnakes::Resources::Apple.new(snake) }
   let(:apple_coordinates) { { x: 4, y: 4 } }
-
-  before(:all) { load_config }
 
   before(:each) do
     apple.instance_variable_set(:@x, apple_coordinates[:x])

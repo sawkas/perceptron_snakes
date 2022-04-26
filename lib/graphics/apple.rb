@@ -9,14 +9,14 @@ module PerceptronSnakes
         @apple = apple
 
         super(
-          CoordinatesMapper.map_cell_to_square(@apple.x, @apple.y).merge({ color: Settings.colors.apple })
+          Utils::CoordinatesMapper.map_cell_to_square(@apple.x, @apple.y).merge({ color: Settings.colors.apple })
         )
       end
 
       def update!
         return unless apple.need_update?
 
-        mapped_apple = CoordinatesMapper.map_cell_to_square(@apple.x, @apple.y)
+        mapped_apple = Utils::CoordinatesMapper.map_cell_to_square(@apple.x, @apple.y)
 
         self.x = mapped_apple[:x]
         self.y = mapped_apple[:y]

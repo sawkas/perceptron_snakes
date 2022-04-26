@@ -1,17 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-
-require_relative '../../lib/gaussian_random_number_generator'
-require_relative '../../lib/neural_network/mutation'
-require_relative '../../lib/neural_network/crossover'
-require_relative '../../lib/neural_network/roulette_wheel'
-require_relative '../../lib/neural_network/weights_store'
-
 describe PerceptronSnakes::NeuralNetwork::WeightsStore do
   let(:weights_store) { described_class.new }
-
-  before(:all) { load_config }
 
   describe '#build_offspring' do
     subject { weights_store.build_offspring }

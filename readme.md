@@ -6,8 +6,10 @@ Neural network and genetic algorithm try to solve snake game (Ruby 3.0.1, [ruby2
 
 <img src="https://user-images.githubusercontent.com/17087260/165080822-e050c9cf-e171-4f26-99d6-dcdf2b7c28bc.gif" width="200" height="200">
 
+
 ## Some explanations
-```main.rb``` - the entry point, here you can see the big picture of snake training</br>
+```main.rb``` - the entry point</br>
+```PerceptronSnakes::Simulation``` - here you can see the big picture of snake training</br>
 ```PerceptronSnakes::NeuralNetwork::Input``` - the service class that prepares values for perceptron inputs (a.k.a. snake vision)
 
 Currently, snakes can see in 8 directions, in every direction snakes see the distance to ```a wall```, ```an apple```, ```itself```.

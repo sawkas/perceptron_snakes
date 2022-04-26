@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-
-require_relative '../../lib/neural_network/roulette_wheel'
-
 describe PerceptronSnakes::NeuralNetwork::RouletteWheel do
   describe '#get_random' do
     subject { described_class.new(fitness_hash).get_random }

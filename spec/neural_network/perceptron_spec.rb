@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-
-require_relative '../../lib/neural_network/perceptron'
-require_relative '../../lib/neural_network/functions/sigmoid'
-require_relative '../../lib/neural_network/functions/nothing'
-
 describe PerceptronSnakes::NeuralNetwork::Perceptron do
   let(:perceptron) do
     described_class.new(

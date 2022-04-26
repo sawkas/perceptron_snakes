@@ -5,7 +5,7 @@ module PerceptronSnakes
     class Mutation
       class << self
         def mutate(weights, mutation_rate = Settings.learning.mutation_rate)
-          random_gaussian = GaussianRandomNumberGenerator.new(0.5) # mean 0.5
+          random_gaussian = PerceptronSnakes::Utils::GaussianRandomNumberGenerator.new(0.5) # mean 0.5
 
           weights.map do |row|
             row.map do |column|
