@@ -22,7 +22,7 @@ module PerceptronSnakes
         @sides << Rectangle.new(
           x: 0,
           y: 0,
-          width: PerceptronSnakes::Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
+          width: Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
           height: Settings.sizes.cell,
           color: Settings.colors.wall
         )
@@ -32,24 +32,24 @@ module PerceptronSnakes
           x: 0,
           y: 0,
           width: Settings.sizes.cell,
-          height: PerceptronSnakes::Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
+          height: Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
           color: Settings.colors.wall
         )
 
         # right
         @sides << Rectangle.new(
-          x: PerceptronSnakes::Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS - Settings.sizes.cell,
+          x: Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS - Settings.sizes.cell,
           y: 0,
           width: Settings.sizes.cell,
-          height: PerceptronSnakes::Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
+          height: Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
           color: Settings.colors.wall
         )
 
         # bottom
         @sides << Rectangle.new(
           x: 0,
-          y: PerceptronSnakes::Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS - Settings.sizes.cell,
-          width: PerceptronSnakes::Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
+          y: Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS - Settings.sizes.cell,
+          width: Utils::CoordinatesMapper::WINDOW_SIDE_IN_PIXELS,
           height: Settings.sizes.cell,
           color: Settings.colors.wall
         )

@@ -23,7 +23,7 @@ module PerceptronSnakes
           log_variables
 
           if generation == Settings.learning.number_of_generations
-            PerceptronSnakes::Data::ExportWeights.new(@best_snake[:weights], @best_snake[:fitness]).export
+            Data::ExportWeights.new(@best_snake[:weights], @best_snake[:fitness]).export
 
             exit
           end
@@ -64,7 +64,7 @@ module PerceptronSnakes
     def set_perceptron_weights
       if generation.zero?
         if Settings.learning.weights
-          PerceptronSnakes::Data::ImportWeights.new(perceptron, Settings.learning.weights).import
+          Data::ImportWeights.new(perceptron, Settings.learning.weights).import
         else
           perceptron.set_random_weights
         end
@@ -88,7 +88,7 @@ module PerceptronSnakes
     end
 
     def weight_store
-      @weight_store ||= PerceptronSnakes::NeuralNetwork::WeightsStore.new
+      @weight_store ||= NeuralNetwork::WeightsStore.new
     end
 
     def snake_step
@@ -97,28 +97,28 @@ module PerceptronSnakes
     end
 
     def choose_new_direction
-      input = PerceptronSnakes::NeuralNetwork::Input.new(
+      input = NeuralNetwork::Input.new(
         @snake_graphic.snake, @wall_graphic.wall, @apple_graphic.apple
       ).call
 
       output = perceptron.feedforward(input)
 
-      PerceptronSnakes::NeuralNetwork::ResultMapper.map_result_to_direction(output)
+      NeuralNetwork::ResultMapper.map_result_to_direction(output)
     end
 
     def build_new_resources
       clear_graphics if @snake_graphic || @apple_graphic
 
-      @wall_graphic = PerceptronSnakes::Graphics::Wall.new(
-        PerceptronSnakes::Resources::Wall.new
+      @wall_graphic = Graphics::Wall.new(
+        Resources::Wall.new
       )
 
-      @snake_graphic = PerceptronSnakes::Graphics::Snake.new(
-        PerceptronSnakes::Resources::Snake.new
+      @snake_graphic = Graphics::Snake.new(
+        Resources::Snake.new
       )
 
-      @apple_graphic = PerceptronSnakes::Graphics::Apple.new(
-        PerceptronSnakes::Resources::Apple.new(@snake_graphic.snake)
+      @apple_graphic = Graphics::Apple.new(
+        Resources::Apple.new(@snake_graphic.snake)
       )
     end
 
@@ -136,7 +136,7 @@ module PerceptronSnakes
       return @perceptron if @perceptron
 
       @perceptron =
-        PerceptronSnakes::NeuralNetwork::Perceptron.new(
+        NeuralNetwork::Perceptron.new(
           number_of_inputs: 32,
           number_of_outputs: 4,
           number_of_nodes_on_hidden: [20, 12],
