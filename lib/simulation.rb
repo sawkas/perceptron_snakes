@@ -15,7 +15,7 @@ module PerceptronSnakes
     def iteration
       snake_step
 
-      unless @snake_graphic.snake.alive
+      unless @snake.alive
         collect_snake
         set_perceptron_weights
 
@@ -41,6 +41,10 @@ module PerceptronSnakes
 
     private
 
+    # resources
+    attr_reader :wall, :snake, :apple, :wall_graphic, :snake_graphic, :apple_graphic
+
+    # other vars
     attr_reader :snake_number, :generation, :generation_fitneses, :generation_scores
 
     def log_variables
@@ -74,10 +78,10 @@ module PerceptronSnakes
     end
 
     def collect_snake
-      fitness = @snake_graphic.snake.calculate_fitness
+      fitness = @snake.calculate_fitness
 
       @generation_fitneses << fitness
-      @generation_scores << @snake_graphic.snake.apples
+      @generation_scores << @snake.apples
 
       if @best_snake[:fitness] < fitness
         @best_snake[:fitness] = fitness
@@ -92,42 +96,41 @@ module PerceptronSnakes
     end
 
     def snake_step
-      @snake_graphic.snake.direction = choose_new_direction
-      @snake_graphic.snake.step(@wall_graphic.wall, @apple_graphic.apple)
+      @snake.direction = choose_new_direction
+      @snake.step(@wall, @apple)
     end
 
     def choose_new_direction
-      input = NeuralNetwork::Input.new(
-        @snake_graphic.snake, @wall_graphic.wall, @apple_graphic.apple
-      ).call
-
+      input = NeuralNetwork::Input.new(@snake, @wall, @apple).call
       output = perceptron.feedforward(input)
 
       NeuralNetwork::ResultMapper.map_result_to_direction(output)
     end
 
     def build_new_resources
+      @wall = Resources::Wall.new
+      @snake = Resources::Snake.new
+      @apple = Resources::Apple.new(@snake)
+
+      return if Settings.game.only_command_line_output
+
       clear_graphics if @snake_graphic || @apple_graphic
 
-      @wall_graphic = Graphics::Wall.new(
-        Resources::Wall.new
-      )
-
-      @snake_graphic = Graphics::Snake.new(
-        Resources::Snake.new
-      )
-
-      @apple_graphic = Graphics::Apple.new(
-        Resources::Apple.new(@snake_graphic.snake)
-      )
+      @wall_graphic = Graphics::Wall.new(@wall)
+      @snake_graphic = Graphics::Snake.new(@snake)
+      @apple_graphic = Graphics::Apple.new(@apple)
     end
 
     def update_graphics!
+      return if Settings.game.only_command_line_output
+
       @apple_graphic.update!
       @snake_graphic.update!
     end
 
     def clear_graphics
+      return if Settings.game.only_command_line_output
+
       @snake_graphic.remove
       @apple_graphic.remove
     end

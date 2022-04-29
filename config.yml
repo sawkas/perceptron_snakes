@@ -10,13 +10,14 @@ colors:
 
 game:
   only_command_line_output: false
-  step_delay: 0.03
+  step_delay: 0.04
 
 learning:
   weights: '1650746992_37778931862957170098176.txt'
+  # weights: '1651226680_4611686018430292992.txt'
   available_steps_without_apple: 150
   number_of_snakes_in_generation: 1000
   number_of_parents_in_generation: 500
-  number_of_generations: 500
+  number_of_generations: 200
   mutation_rate: 5
   mutation_scale: 0.2
